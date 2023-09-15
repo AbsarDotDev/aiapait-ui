@@ -1,5 +1,6 @@
 import 'package:aiapait/screens/login_screen.dart';
 import 'package:aiapait/screens/splash_screen.dart';
+import 'package:aiapait/screens/test_Screen.dart';
 import 'package:aiapait/utils/route_names.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,10 @@ class Routes {
       case RouteNames.loginScreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const LoginScreen(),
+        );
+      case RouteNames.testScreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const TestScreen(),
         );
       default:
         return MaterialPageRoute(builder: (_) {

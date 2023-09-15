@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           color: Color(AppColors.black),
         )),
         fontFamily: 'Poppins',
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Color(AppColors.bgColor)),
         useMaterial3: true,
       ),
       initialRoute: RouteNames.loginScreen,
