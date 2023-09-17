@@ -40,6 +40,8 @@ class _LoginScreenState extends State<LoginScreen> {
       DeviceOrientation.portraitDown,
     ]);
     super.dispose();
+    phoneController.dispose();
+    passwordController.dispose();
   }
 
   @override
@@ -118,6 +120,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                         width: 2,
                                       ))),
                               initialCountryCode: 'PK',
+                              validator: (value) {
+                                if (value!.completeNumber.isEmpty ||
+                                    value.completeNumber.isValidPhone) {
+                                  return 'Invalid Phone Number';
+                                }
+                                return null;
+                              },
                               onChanged: (phone) {
                                 setState(() {
                                   isFormValid =
@@ -130,14 +139,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         CustomTextField(
                           validator: (value) {
                             if (value!.isEmpty || value.isValidPassword) {
+                              setState(() {
+                                isFormValid =
+                                    _formKey.currentState!.validate() &&
+                                        passwordController.text.isNotEmpty &&
+                                        value.isNotEmpty;
+                              });
                               return 'This is a required field';
                             }
                             // Add more validation logic as needed
-                            setState(() {
-                              isFormValid = _formKey.currentState!.validate() &&
-                                  passwordController.text.isNotEmpty &&
-                                  value.isNotEmpty;
-                            });
+
                             return null;
                           },
                           suffixIcon: Icons.remove_red_eye,
@@ -166,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () {
                       setState(() {
                         isLoading = true;
-                        Timer(Duration(seconds: 2), () {
+                        Timer(const Duration(seconds: 2), () {
                           isLoading = false;
                         });
                       });

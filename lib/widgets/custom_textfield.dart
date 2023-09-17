@@ -48,7 +48,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 errorMessage = widget.validator?.call(value);
               });
             },
-            autofocus: false,
             decoration: InputDecoration(
               prefixIcon: widget.preFixIcon != null
                   ? Icon(
@@ -56,11 +55,27 @@ class _CustomTextFieldState extends State<CustomTextField> {
                       color: Color(AppColors.primary),
                     )
                   : null,
-              suffixIcon: widget.suffixIcon != null
-                  ? Icon(
+              suffixIcon: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween, // added line
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (errorMessage != null)
+                    Icon(
+                      Icons.info_rounded,
+                      color: Color(0xFFF44336),
+                    ),
+                  SizedBox(
+                    width: 2,
+                  ),
+                  if (widget.suffixIcon != null)
+                    Icon(
                       widget.suffixIcon,
-                    )
-                  : null,
+                    ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                ],
+              ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
                 borderSide: BorderSide(
