@@ -24,16 +24,21 @@ class _CustomButtonState extends State<CustomButton> {
     return InkWell(
       onTap: widget.isDisabled || widget.isLoading ? null : widget.onPressed,
       child: Container(
+        padding: EdgeInsets.all(12),
         height: 48,
+        width: widget.isLoading ? 48 : double.infinity,
         decoration: BoxDecoration(
           color: widget.isDisabled ? Colors.grey : Color(AppColors.primary),
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: widget.isLoading
+              ? BorderRadius.circular(50)
+              : BorderRadius.circular(4),
         ),
         child: Center(
           child: widget.isLoading
               ? CircularProgressIndicator(
+                  color: Colors.white,
                   backgroundColor:
-                      widget.isDisabled ? Colors.grey : Colors.blue,
+                      widget.isDisabled ? Colors.white : Colors.transparent,
                 )
               : Text(
                   widget.text,

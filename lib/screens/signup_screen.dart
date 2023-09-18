@@ -11,16 +11,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController fullNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   bool isLoading = false;
   bool isFormValid = false;
   @override
@@ -81,14 +83,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const CustomText(
-                    text: "Let's Sign You In",
+                    text: "Create Your Account",
                     fontSize: 26,
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   CustomText(
-                    text: "Welcome Back",
+                    text: "Let's get Started",
                     fontSize: 15,
                     color: AppColors.primary,
                     fontWeight: FontWeight.w600,
@@ -101,6 +103,48 @@ class _LoginScreenState extends State<LoginScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
+                      CustomTextField(
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            setState(() {
+                              isFormValid = false;
+                            });
+                            return 'This is a required field';
+                          } else if (value.length < 2 || value.length > 50) {
+                            setState(() {
+                              isFormValid = false;
+                            });
+                            return 'Enter betweeen 2 to 50 characters';
+                          }
+                          // Add more validation logic as needed
+
+                          return null;
+                        },
+                        preFixIcon: Icons.person_outline,
+                        controller: fullNameController,
+                        hintText: 'Full Name',
+                      ),
+                      CustomTextField(
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            setState(() {
+                              isFormValid = false;
+                            });
+                            return 'This is a required field';
+                          } else if (!value.isValidEmail) {
+                            setState(() {
+                              isFormValid = false;
+                            });
+                            return 'Invalid email address';
+                          }
+                          // Add more validation logic as needed
+
+                          return null;
+                        },
+                        preFixIcon: Icons.email_outlined,
+                        controller: emailController,
+                        hintText: 'Email',
+                      ),
                       Card(
                           elevation: 20.0,
                           shadowColor: Colors.grey[50],
@@ -164,7 +208,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   CustomButton(
-                    text: "Login",
+                    text: "Register Now",
                     isDisabled: !isFormValid,
                     isLoading: isLoading,
                     onPressed: () {
@@ -183,7 +227,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CustomText(
-                        text: "New here?",
+                        text: "Already have account?",
                         fontSize: 15,
                         color: AppColors.primary,
                       ),
@@ -192,9 +236,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       CustomTextButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, RouteNames.signupScreen);
+                          Navigator.pushNamed(context, RouteNames.loginScreen);
                         },
-                        text: "Register Now",
+                        text: "Login",
                         fontSize: 15,
                         color: AppColors.primary,
                         fontWeight: FontWeight.w600,

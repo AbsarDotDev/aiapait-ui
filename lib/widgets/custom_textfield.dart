@@ -27,6 +27,7 @@ class CustomTextField extends StatefulWidget {
 
 class _CustomTextFieldState extends State<CustomTextField> {
   String? errorMessage;
+  bool isFormValid = false; // Add this line
 
   @override
   void initState() {
@@ -39,13 +40,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Card(
-          elevation: 20.0,
-          shadowColor: Colors.grey[50],
+          elevation: 6,
           child: TextFormField(
             controller: widget.controller,
             onChanged: (value) {
               setState(() {
                 errorMessage = widget.validator?.call(value);
+                isFormValid = errorMessage == null;
               });
             },
             decoration: InputDecoration(
@@ -59,11 +60,17 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween, // added line
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  if (errorMessage != null)
-                    Icon(
-                      Icons.info_rounded,
-                      color: Color(0xFFF44336),
-                    ),
+                  errorMessage != null
+                      ? Icon(
+                          Icons.info_rounded,
+                          color: Color(0xFFF44336),
+                        )
+                      : isFormValid // Update this line
+                          ? Icon(
+                              Icons.check,
+                              color: Colors.green,
+                            )
+                          : SizedBox(),
                   SizedBox(
                     width: 2,
                   ),
@@ -87,7 +94,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               fillColor: Colors.white,
               filled: true,
               contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
                 borderSide: const BorderSide(color: Colors.white, width: 2),
