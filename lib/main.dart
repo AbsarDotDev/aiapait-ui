@@ -20,9 +20,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme: TextTheme(
             displayLarge: TextStyle(
-          fontSize: 40,
-          color: Color(AppColors.black),
-        )),
+              fontSize: 40,
+              color: Color(AppColors.black),
+            ),
+            bodySmall: TextStyle(color: Color(AppColors.black), fontSize: 10)),
         fontFamily: 'Poppins',
         colorScheme: ColorScheme.fromSeed(seedColor: Color(AppColors.bgColor)),
         useMaterial3: true,

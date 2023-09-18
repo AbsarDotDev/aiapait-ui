@@ -1,3 +1,5 @@
+import 'package:aiapait/screens/forgot_password_screen.dart';
+import 'package:aiapait/screens/home_screen.dart';
 import 'package:aiapait/screens/login_screen.dart';
 import 'package:aiapait/screens/signup_screen.dart';
 import 'package:aiapait/screens/splash_screen.dart';
@@ -24,7 +26,14 @@ class Routes {
         return MaterialPageRoute(
           builder: (BuildContext context) => const SignUpScreen(),
         );
-
+      case RouteNames.forgotpasswordScreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const ForgotPasswordScreen(),
+        );
+      case RouteNames.homeScreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const HomeScreen(),
+        );
       default:
         return MaterialPageRoute(builder: (_) {
           return const Scaffold(

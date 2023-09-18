@@ -10,6 +10,7 @@ import 'package:aiapait/widgets/custom_textfield.dart';
 import 'package:aiapait/widgets/text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -28,7 +29,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   FocusNode emailFocusNode = FocusNode();
   FocusNode phoneFocusNode = FocusNode();
   FocusNode passwordFocusNode = FocusNode();
-
+  static const _initialCountryCode = 'PK';
+  var _country =
+      countries.firstWhere((element) => element.code == _initialCountryCode);
   bool isLoading = false;
   bool isFormValid = false;
   @override
@@ -175,20 +178,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           .primary), // Change the border color when focused
                                       width: 2,
                                     ))),
-                            initialCountryCode: 'PK',
-                            validator: (value) {
-                              if (value!.completeNumber.isEmpty ||
-                                  value.completeNumber.isValidPhone) {
-                                return 'Invalid Phone Number';
+                            initialCountryCode: _initialCountryCode,
+                            onChanged: (value) {
+                              if (value.number.length >= _country.minLength &&
+                                  value.number.length <= _country.maxLength) {
+                                setState(() {
+                                  isFormValid = true;
+                                });
+                              } else {
+                                setState(() {
+                                  isFormValid = false;
+                                });
                               }
-                              return null;
                             },
-                            onChanged: (phone) {
-                              setState(() {
-                                isFormValid = phone.completeNumber.isNotEmpty &&
-                                    passwordController.text.isNotEmpty;
-                              });
-                            },
+                            onCountryChanged: (country) => _country = country,
                             onSubmitted: (value) {
                               Utils.fieldFocusChange(
                                   context, phoneFocusNode, passwordFocusNode);
@@ -217,12 +220,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         controller: passwordController,
                         hintText: 'Password',
                       ),
-                      CustomText(
-                        color: AppColors.primary,
-                        text: "Forgot Password?",
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                      )
                     ],
                   ),
                   const Expanded(

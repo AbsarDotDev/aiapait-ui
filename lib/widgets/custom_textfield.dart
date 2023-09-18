@@ -8,6 +8,7 @@ import 'package:aiapait/widgets/custom_text.dart';
 class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
   final String? Function(String?)? validator;
+  final bool obscureText;
   FocusNode currentNode;
   FocusNode? nextNode;
 
@@ -15,16 +16,17 @@ class CustomTextField extends StatefulWidget {
   IconData? preFixIcon;
   IconData? suffixIcon;
 
-  CustomTextField({
-    Key? key,
-    required this.controller,
-    required this.validator,
-    required this.currentNode,
-    this.nextNode,
-    required this.hintText,
-    this.preFixIcon,
-    this.suffixIcon,
-  }) : super(key: key);
+  CustomTextField(
+      {Key? key,
+      required this.controller,
+      required this.validator,
+      required this.currentNode,
+      this.nextNode,
+      required this.hintText,
+      this.preFixIcon,
+      this.suffixIcon,
+      this.obscureText = false})
+      : super(key: key);
 
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();
@@ -47,6 +49,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         Card(
           elevation: 6,
           child: TextFormField(
+            obscureText: widget.obscureText,
             focusNode: widget.currentNode,
             controller: widget.controller,
             onChanged: (value) {

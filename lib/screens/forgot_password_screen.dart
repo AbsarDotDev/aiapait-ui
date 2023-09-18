@@ -13,32 +13,22 @@ import 'package:flutter/services.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class ForgotPasswordScreen extends StatefulWidget {
+  const ForgotPasswordScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   TextEditingController phoneController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
   FocusNode phoneFocusNode = FocusNode();
-  FocusNode passwordFocusNode = FocusNode();
-  final ValueNotifier<bool> _obsecurePassword = ValueNotifier(true);
   static const _initialCountryCode = 'PK';
   var _country =
       countries.firstWhere((element) => element.code == _initialCountryCode);
+
   bool isLoading = false;
   bool isFormValid = false;
-  bool isPhoneNumberValid = false;
-  bool isPasswordValid = false;
-  void validateForm() {
-    setState(() {
-      isFormValid = isPhoneNumberValid && isPasswordValid;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
@@ -56,9 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
     ]);
     super.dispose();
     phoneController.dispose();
-    passwordController.dispose();
     phoneFocusNode.dispose();
-    passwordFocusNode.dispose();
   }
 
   @override
@@ -99,14 +87,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const CustomText(
-                    text: "Let's Sign You In",
+                    text: "Forgot Password?",
                     fontSize: 26,
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   CustomText(
-                    text: "Welcome Back",
+                    text:
+                        "Don't worry. Just fill your phone number. We'll send you and OTP to reset your password",
                     fontSize: 15,
                     color: AppColors.primary,
                     fontWeight: FontWeight.w600,
@@ -140,64 +129,20 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (value.number.length >= _country.minLength &&
                                   value.number.length <= _country.maxLength) {
                                 setState(() {
-                                  isPhoneNumberValid = true;
+                                  isFormValid = true;
                                 });
                               } else {
                                 setState(() {
-                                  isPhoneNumberValid = false;
+                                  isFormValid = false;
                                 });
                               }
-                              validateForm();
                             },
                             onCountryChanged: (country) => _country = country,
-                            onSubmitted: (value) {
-                              Utils.fieldFocusChange(
-                                  context, phoneFocusNode, passwordFocusNode);
-                            },
+                            // onSubmitted: (value) {
+                            //   Utils.fieldFocusChange(
+                            //       context, phoneFocusNode, passwordFocusNode);
+                            // },
                           )),
-                      ValueListenableBuilder(
-                          valueListenable: _obsecurePassword,
-                          builder: (context, value, child) {
-                            return CustomTextField(
-                              currentNode: passwordFocusNode,
-                              obscureText: _obsecurePassword.value,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  setState(() {
-                                    isFormValid = false;
-                                  });
-                                  return 'This is a required field';
-                                } else if (!value.isValidPassword) {
-                                  setState(() {
-                                    isFormValid = false;
-                                  });
-                                  return 'Your password should be between 8 and 50 characters';
-                                }
-                                // Add more validation logic as needed
-                                setState(() {
-                                  isPasswordValid = true;
-                                });
-                                validateForm();
-
-                                return null;
-                              },
-                              suffixIcon: Icons.remove_red_eye,
-                              preFixIcon: Icons.lock,
-                              controller: passwordController,
-                              hintText: 'Password',
-                            );
-                          }),
-                      CustomTextButton(
-                        onPressed: () {
-                          Navigator.pushNamed(
-                              context, RouteNames.forgotpasswordScreen);
-                        },
-                        text: "Forgot Password?",
-                        fontSize: 12,
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.w900,
-                        isLink: true,
-                      ),
                     ],
                   ),
                   const Expanded(
@@ -206,44 +151,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   CustomButton(
-                    text: "Login",
+                    text: "Get OTP",
                     isDisabled: !isFormValid,
                     isLoading: isLoading,
                     onPressed: () {
                       setState(() {
                         isLoading = true;
-                      });
-                      Timer(const Duration(seconds: 2), () {
-                        Navigator.pushNamed(context, RouteNames.homeScreen);
+                        Timer(const Duration(seconds: 2), () {
+                          isLoading = false;
+                        });
                       });
                     },
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomText(
-                        text: "New here?",
-                        fontSize: 15,
-                        color: AppColors.primary,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      CustomTextButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, RouteNames.signupScreen);
-                        },
-                        text: "Register Now",
-                        fontSize: 14,
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.w600,
-                        isLink: true,
-                      ),
-                    ],
-                  )
                 ],
               ),
             ),
