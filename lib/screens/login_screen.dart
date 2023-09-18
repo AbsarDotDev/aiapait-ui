@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:aiapait/utils/colors.dart';
 import 'package:aiapait/utils/regex_checker.dart';
 import 'package:aiapait/utils/route_names.dart';
+import 'package:aiapait/utils/utils.dart';
 import 'package:aiapait/widgets/custom_button.dart';
 import 'package:aiapait/widgets/custom_text.dart';
 import 'package:aiapait/widgets/custom_textfield.dart';
@@ -21,6 +22,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  FocusNode phoneFocusNode = FocusNode();
+  FocusNode passwordFocusNode = FocusNode();
   bool isLoading = false;
   bool isFormValid = false;
   @override
@@ -41,6 +44,8 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
     phoneController.dispose();
     passwordController.dispose();
+    phoneFocusNode.dispose();
+    passwordFocusNode.dispose();
   }
 
   @override
@@ -105,6 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           elevation: 20.0,
                           shadowColor: Colors.grey[50],
                           child: IntlPhoneField(
+                            focusNode: phoneFocusNode,
                             dropdownIconPosition: IconPosition.trailing,
                             decoration: InputDecoration(
                                 fillColor: Colors.white,
@@ -130,8 +136,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                     passwordController.text.isNotEmpty;
                               });
                             },
+                            onSubmitted: (value) {
+                              Utils.fieldFocusChange(
+                                  context, phoneFocusNode, passwordFocusNode);
+                            },
                           )),
                       CustomTextField(
+                        currentNode: passwordFocusNode,
                         validator: (value) {
                           if (value!.isEmpty || value.isValidPassword) {
                             setState(() {

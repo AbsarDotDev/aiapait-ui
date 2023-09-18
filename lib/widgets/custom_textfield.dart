@@ -1,12 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:aiapait/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 import 'package:aiapait/utils/colors.dart';
+import 'package:aiapait/utils/utils.dart';
+import 'package:aiapait/widgets/custom_text.dart';
 
 class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
   final String? Function(String?)? validator;
+  FocusNode currentNode;
+  FocusNode? nextNode;
 
   final String hintText;
   IconData? preFixIcon;
@@ -15,10 +18,12 @@ class CustomTextField extends StatefulWidget {
   CustomTextField({
     Key? key,
     required this.controller,
+    required this.validator,
+    required this.currentNode,
+    this.nextNode,
     required this.hintText,
     this.preFixIcon,
     this.suffixIcon,
-    required this.validator,
   }) : super(key: key);
 
   @override
@@ -42,12 +47,17 @@ class _CustomTextFieldState extends State<CustomTextField> {
         Card(
           elevation: 6,
           child: TextFormField(
+            focusNode: widget.currentNode,
             controller: widget.controller,
             onChanged: (value) {
               setState(() {
                 errorMessage = widget.validator?.call(value);
                 isFormValid = errorMessage == null;
               });
+            },
+            onFieldSubmitted: (value) {
+              Utils.fieldFocusChange(
+                  context, widget.currentNode, widget.nextNode!);
             },
             decoration: InputDecoration(
               prefixIcon: widget.preFixIcon != null
@@ -107,7 +117,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
             child: CustomText(
               text: errorMessage!,
-              fontSize: 15,
+              fontSize: 10,
+              fontWeight: FontWeight.bold,
               color: AppColors.red,
             ),
           ),

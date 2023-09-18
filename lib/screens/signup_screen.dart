@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:aiapait/utils/colors.dart';
 import 'package:aiapait/utils/regex_checker.dart';
 import 'package:aiapait/utils/route_names.dart';
+import 'package:aiapait/utils/utils.dart';
 import 'package:aiapait/widgets/custom_button.dart';
 import 'package:aiapait/widgets/custom_text.dart';
 import 'package:aiapait/widgets/custom_textfield.dart';
@@ -23,6 +24,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController fullNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  FocusNode fullNameFocusNode = FocusNode();
+  FocusNode emailFocusNode = FocusNode();
+  FocusNode phoneFocusNode = FocusNode();
+  FocusNode passwordFocusNode = FocusNode();
+
   bool isLoading = false;
   bool isFormValid = false;
   @override
@@ -43,6 +49,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.dispose();
     phoneController.dispose();
     passwordController.dispose();
+    fullNameFocusNode.dispose();
+    emailFocusNode.dispose();
+    phoneFocusNode.dispose();
+    passwordFocusNode.dispose();
   }
 
   @override
@@ -104,6 +114,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       CustomTextField(
+                        currentNode: fullNameFocusNode,
+                        nextNode: emailFocusNode,
                         validator: (value) {
                           if (value!.isEmpty) {
                             setState(() {
@@ -125,6 +137,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         hintText: 'Full Name',
                       ),
                       CustomTextField(
+                        currentNode: emailFocusNode,
+                        nextNode: phoneFocusNode,
                         validator: (value) {
                           if (value!.isEmpty) {
                             setState(() {
@@ -149,6 +163,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           elevation: 20.0,
                           shadowColor: Colors.grey[50],
                           child: IntlPhoneField(
+                            focusNode: phoneFocusNode,
                             dropdownIconPosition: IconPosition.trailing,
                             decoration: InputDecoration(
                                 fillColor: Colors.white,
@@ -174,16 +189,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     passwordController.text.isNotEmpty;
                               });
                             },
+                            onSubmitted: (value) {
+                              Utils.fieldFocusChange(
+                                  context, phoneFocusNode, passwordFocusNode);
+                            },
                           )),
                       CustomTextField(
+                        currentNode: passwordFocusNode,
                         validator: (value) {
-                          if (value!.isEmpty || value.isValidPassword) {
+                          if (value!.isEmpty) {
                             setState(() {
-                              isFormValid =
-                                  passwordController.text.isNotEmpty &&
-                                      value.isNotEmpty;
+                              isFormValid = false;
                             });
                             return 'This is a required field';
+                          } else if (!value.isValidPassword) {
+                            setState(() {
+                              isFormValid = false;
+                            });
+                            return 'Your password should be between 8 and 50 characters';
                           }
                           // Add more validation logic as needed
 
