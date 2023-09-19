@@ -7,4 +7,5 @@ class AppColors {
   static int green = 0xFF08B256;
   static int dividerColor = 0xFFDBDBDB;
   static int yellow = 0xffF69E1A;
+  static int black50 = 0x7F000000;
 }

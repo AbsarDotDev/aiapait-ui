@@ -14,7 +14,7 @@ class CustomTextField extends StatefulWidget {
 
   final String hintText;
   IconData? preFixIcon;
-  IconData? suffixIcon;
+  Widget? suffixIcon;
 
   CustomTextField(
       {Key? key,
@@ -88,8 +88,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     width: 2,
                   ),
                   if (widget.suffixIcon != null)
-                    Icon(
-                      widget.suffixIcon,
+                    Center(
+                      child: widget.suffixIcon,
                     ),
                   SizedBox(
                     width: 20,

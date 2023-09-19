@@ -215,7 +215,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                           return null;
                         },
-                        suffixIcon: Icons.remove_red_eye,
+                        suffixIcon: Icon(Icons.remove_red_eye),
                         preFixIcon: Icons.lock,
                         controller: passwordController,
                         hintText: 'Password',
