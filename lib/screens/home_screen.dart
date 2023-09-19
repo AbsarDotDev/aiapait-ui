@@ -81,27 +81,35 @@ class _HomeScreenState extends State<HomeScreen> {
             SliverAppBar(
               automaticallyImplyLeading: false,
               leadingWidth: double.infinity / 2,
-              leading: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomText(
-                    text: "Greetings",
-                    fontSize: 19,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.primary,
-                  ),
-                  CustomText(
-                    text: "Absar Ali",
-                    fontSize: 22,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.black,
-                  ),
-                ],
+              leading: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: CustomText(
+                        text: "Greetings",
+                        fontSize: 19,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.primary,
+                      ),
+                    ),
+                    Expanded(
+                      child: CustomText(
+                        text: "Absar Ali",
+                        fontSize: 22,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.black,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               backgroundColor: Color(AppColors.bgColor),
               surfaceTintColor: Color(AppColors.bgColor),
               floating: true,
               pinned: true,
+              collapsedHeight: 70,
               actions: <Widget>[
                 !_showSearchField ? const Icon(Icons.search) : const SizedBox(),
               ],
@@ -110,25 +118,61 @@ class _HomeScreenState extends State<HomeScreen> {
               delegate: SliverChildListDelegate(
                 <Widget>[
                   _showSearchField
-                      ? CustomTextField(
-                          controller: _searchController,
-                          currentNode: searchNode,
-                          validator: (val) {},
-                          hintText: "Search",
-                          preFixIcon: Icons.search,
-                          suffixIcon: InkWell(
-                            onTap: () {
-                              _showMyDialog();
-                            },
-                            child: SvgPicture.asset(
-                              'assets/icons/ic_settings.svg',
-                            ),
-                          ),
+                      ? TextField(
+                          decoration: InputDecoration(
+                              hintText: "Search",
+                              hintStyle: TextStyle(
+                                color: Color(AppColors.black50),
+                              ),
+                              prefixIcon: Icon(
+                                Icons.search,
+                                color: Color(AppColors.black50),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: Color(AppColors.black50),
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: Color(AppColors.black50),
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: Color(AppColors.black50),
+                                ),
+                              ),
+                              suffixIcon: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      _showMyDialog();
+                                    },
+                                    child: SvgPicture.asset(
+                                      "assets/icons/ic_settings.svg",
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        _selectedFilter = "";
+                                      });
+                                    },
+                                    color: Color(AppColors.black50),
+                                    icon: Icon(Icons.close),
+                                  ),
+                                ],
+                              )),
                         )
-                      : const SizedBox(
-                          height: 0,
-                        ),
+                      : Center(),
                   ListView.builder(
+                    padding: EdgeInsets.zero,
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: 10,
@@ -161,9 +205,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Color(AppColors.white),
               ),
             )
-          : null,
-      bottomNavigationBar: _showFloatingButton
-          ? null
           : Container(
               color: Colors.transparent,
               padding:
@@ -173,6 +214,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () {},
               ),
             ),
+      floatingActionButtonLocation: _showFloatingButton
+          ? FloatingActionButtonLocation.endDocked
+          : FloatingActionButtonLocation.centerDocked,
     );
   }
 
@@ -293,11 +337,9 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.fromLTRB(0, 10, 6, 0),
               child: FilterButton(
                 text: e,
-                isActive: isActive,
+                selectedFilter: _selectedFilter,
                 onPressed: () {
-                  setState(() {
-                    _selectedFilter = isActive ? "" : e;
-                  });
+                  _handleFilterSelection(e, setState);
                 },
               ),
             );
@@ -306,5 +348,11 @@ class _HomeScreenState extends State<HomeScreen> {
         const SizedBox(height: 16),
       ],
     );
+  }
+
+  void _handleFilterSelection(String filter, StateSetter setState) {
+    setState(() {
+      _selectedFilter = filter == _selectedFilter ? "" : filter;
+    });
   }
 }
