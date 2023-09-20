@@ -118,57 +118,87 @@ class _HomeScreenState extends State<HomeScreen> {
               delegate: SliverChildListDelegate(
                 <Widget>[
                   _showSearchField
-                      ? TextField(
-                          decoration: InputDecoration(
-                              hintText: "Search",
-                              hintStyle: TextStyle(
-                                color: Color(AppColors.black50),
-                              ),
-                              prefixIcon: Icon(
-                                Icons.search,
-                                color: Color(AppColors.black50),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(
-                                  color: Color(AppColors.black50),
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(
-                                  color: Color(AppColors.black50),
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(
-                                  color: Color(AppColors.black50),
-                                ),
-                              ),
-                              suffixIcon: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      _showMyDialog();
-                                    },
-                                    child: SvgPicture.asset(
-                                      "assets/icons/ic_settings.svg",
+                      ? Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                12), // Set the card's border radius
+                          ),
+                          surfaceTintColor: Color(AppColors.white),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    margin: EdgeInsets.symmetric(horizontal: 4),
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
                                     ),
+                                    child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Icon(
+                                            Icons.search,
+                                            color: Color(AppColors.primary),
+                                          ),
+                                          CustomText(
+                                              text: 'Search', fontSize: 12),
+                                          Expanded(
+                                              child: SizedBox(
+                                            width: 20,
+                                          )),
+                                          if (_selectedFilter != "")
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                                color: Colors.grey[400],
+                                              ),
+                                              padding: EdgeInsets.all(8),
+                                              child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    InkWell(
+                                                      onTap: () {
+                                                        setState(() {
+                                                          _selectedFilter = "";
+                                                        });
+                                                      },
+                                                      child: Icon(
+                                                        Icons.close,
+                                                        size: 12,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      _selectedFilter,
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 12),
+                                                    )
+                                                  ]),
+                                            ),
+                                        ]),
                                   ),
-                                  const SizedBox(width: 8),
-                                  IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        _selectedFilter = "";
-                                      });
-                                    },
-                                    color: Color(AppColors.black50),
-                                    icon: Icon(Icons.close),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 40,
+                                child: InkWell(
+                                  onTap: () {
+                                    _showMyDialog();
+                                  },
+                                  child: SvgPicture.asset(
+                                    "assets/icons/ic_settings.svg",
                                   ),
-                                ],
-                              )),
+                                ),
+                              ),
+                            ],
+                          ),
                         )
                       : Center(),
                   ListView.builder(
@@ -247,6 +277,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         onTap: () {
                           Navigator.of(context).pop();
+                          setState(() {});
                         },
                       ),
                       const CustomText(
@@ -257,6 +288,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       InkWell(
                         onTap: () {
                           Navigator.of(context).pop();
+                          setState(() {
+                            _selectedFilter = "";
+                          });
                         },
                         child: Row(
                           children: [
@@ -277,26 +311,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 content: StatefulBuilder(
-                  builder: (BuildContext context, StateSetter setState) {
+                  builder: (BuildContext context, StateSetter setStates) {
                     return SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const CustomText(
-                            text: "Filters",
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
                           _buildFilterCategory(
-                              "Case Status", _caseStaus, setState),
+                              "Case Status", _caseStaus, setStates),
                           _buildFilterCategory(
-                              "Response Status", _resposeStatus, setState),
-                          _buildFilterCategory("Process", _process, setState),
+                              "Response Status", _resposeStatus, setStates),
+                          _buildFilterCategory("Process", _process, setStates),
                           const SizedBox(height: 30),
                           CustomButton(
                             text: "Apply Filters",
+                            isDisabled: _selectedFilter != "" ? false : true,
                             onPressed: () {
                               Navigator.of(context).pop();
+                              setState(() {});
                             },
                           ),
                         ],
@@ -320,7 +351,7 @@ class _HomeScreenState extends State<HomeScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          padding: const EdgeInsets.symmetric(vertical: 2.0),
           child: Text(
             category,
             style: const TextStyle(
@@ -334,7 +365,7 @@ class _HomeScreenState extends State<HomeScreen> {
             final isActive = e == _selectedFilter;
 
             return Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 6, 0),
+              padding: const EdgeInsets.fromLTRB(0, 8, 6, 0),
               child: FilterButton(
                 text: e,
                 selectedFilter: _selectedFilter,
