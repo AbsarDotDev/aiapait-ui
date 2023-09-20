@@ -1,7 +1,6 @@
 import 'package:aiapait/utils/colors.dart';
 import 'package:aiapait/widgets/custom_button.dart';
 import 'package:aiapait/widgets/custom_text.dart';
-import 'package:aiapait/widgets/custom_textfield.dart';
 import 'package:aiapait/widgets/filter_button.dart';
 import 'package:aiapait/widgets/trademark_card.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   bool _showSearchField = true;
   bool _showFloatingButton = false;
   String _selectedFilter = "";
@@ -50,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
   FocusNode searchNode = FocusNode();
   final List<String> _caseStaus = ["Open", "Closed", "Completed"];
   final List<String> _resposeStatus = [
@@ -69,18 +68,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(_selectedFilter);
-
     return Scaffold(
       backgroundColor: Color(AppColors.bgColor),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 18),
+        padding: const EdgeInsets.symmetric(horizontal: 18),
         child: CustomScrollView(
           controller: _scrollController,
           slivers: <Widget>[
             SliverAppBar(
               automaticallyImplyLeading: false,
-              leadingWidth: double.infinity / 2,
+              leadingWidth: double.infinity,
               leading: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 child: Column(
@@ -130,7 +127,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: InkWell(
                                   onTap: () {},
                                   child: Container(
-                                    margin: EdgeInsets.symmetric(horizontal: 4),
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 4),
                                     height: 40,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(12),
@@ -144,9 +142,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             Icons.search,
                                             color: Color(AppColors.primary),
                                           ),
-                                          CustomText(
+                                          const CustomText(
                                               text: 'Search', fontSize: 12),
-                                          Expanded(
+                                          const Expanded(
                                               child: SizedBox(
                                             width: 20,
                                           )),
@@ -157,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     BorderRadius.circular(15),
                                                 color: Colors.grey[400],
                                               ),
-                                              padding: EdgeInsets.all(8),
+                                              padding: const EdgeInsets.all(8),
                                               child: Row(
                                                   mainAxisSize:
                                                       MainAxisSize.min,
@@ -168,14 +166,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           _selectedFilter = "";
                                                         });
                                                       },
-                                                      child: Icon(
+                                                      child: const Icon(
                                                         Icons.close,
                                                         size: 12,
                                                       ),
                                                     ),
                                                     Text(
                                                       _selectedFilter,
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontSize: 12),
@@ -200,7 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                         )
-                      : Center(),
+                      : const Center(),
                   ListView.builder(
                     padding: EdgeInsets.zero,
                     physics: const NeverScrollableScrollPhysics(),
@@ -228,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: _showFloatingButton
           ? FloatingActionButton(
               backgroundColor: Color(AppColors.primary),
-              shape: CircleBorder(),
+              shape: const CircleBorder(),
               onPressed: () {},
               child: Icon(
                 Icons.add,
@@ -362,8 +360,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         Wrap(
           children: options.map((e) {
-            final isActive = e == _selectedFilter;
-
             return Padding(
               padding: const EdgeInsets.fromLTRB(0, 8, 6, 0),
               child: FilterButton(

@@ -19,16 +19,16 @@ class Utils {
         context: context,
         flushbar: Flushbar(
           forwardAnimationCurve: Curves.decelerate,
-          margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          padding: EdgeInsets.all(15),
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          padding: const EdgeInsets.all(15),
           message: message,
-          duration: Duration(seconds: 3),
+          duration: const Duration(seconds: 3),
           backgroundColor: Colors.red,
           borderRadius: BorderRadius.circular(8),
           reverseAnimationCurve: Curves.easeInOut,
           positionOffset: 20,
           flushbarPosition: FlushbarPosition.TOP,
-          icon: Icon(
+          icon: const Icon(
             Icons.error,
             size: 20,
             color: Colors.white,

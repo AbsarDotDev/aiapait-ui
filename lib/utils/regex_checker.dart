@@ -1,3 +1,4 @@
+// ignore: camel_case_extensions
 extension extString on String {
   bool get isValidEmail {
     final emailRegExp = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
@@ -15,10 +16,6 @@ extension extString on String {
     final passwordRegExp = RegExp(r'^.{8,50}$');
 
     return passwordRegExp.hasMatch(this);
-  }
-
-  bool get isNotNull {
-    return this != null;
   }
 
   bool get isValidPhone {

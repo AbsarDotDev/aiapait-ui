@@ -9,14 +9,14 @@ class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
   final String? Function(String?)? validator;
   final bool obscureText;
-  FocusNode currentNode;
-  FocusNode? nextNode;
+  final FocusNode currentNode;
+  final FocusNode? nextNode;
 
   final String hintText;
-  IconData? preFixIcon;
-  Widget? suffixIcon;
+  final IconData? preFixIcon;
+  final Widget? suffixIcon;
 
-  CustomTextField(
+  const CustomTextField(
       {Key? key,
       required this.controller,
       required this.validator,
@@ -29,10 +29,10 @@ class CustomTextField extends StatefulWidget {
       : super(key: key);
 
   @override
-  _CustomTextFieldState createState() => _CustomTextFieldState();
+  CustomTextFieldState createState() => CustomTextFieldState();
 }
 
-class _CustomTextFieldState extends State<CustomTextField> {
+class CustomTextFieldState extends State<CustomTextField> {
   String? errorMessage;
   bool isFormValid = false; // Add this line
 
@@ -74,24 +74,24 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   errorMessage != null
-                      ? Icon(
+                      ? const Icon(
                           Icons.info_rounded,
                           color: Color(0xFFF44336),
                         )
                       : isFormValid // Update this line
-                          ? Icon(
+                          ? const Icon(
                               Icons.check,
                               color: Colors.green,
                             )
-                          : SizedBox(),
-                  SizedBox(
+                          : const SizedBox(),
+                  const SizedBox(
                     width: 2,
                   ),
                   if (widget.suffixIcon != null)
                     Center(
                       child: widget.suffixIcon,
                     ),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
                 ],

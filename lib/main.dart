@@ -1,4 +1,3 @@
-import 'package:aiapait/screens/splash_screen.dart';
 import 'package:aiapait/utils/colors.dart';
 import 'package:aiapait/utils/route_names.dart';
 import 'package:aiapait/utils/routes.dart';
@@ -28,7 +27,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Color(AppColors.bgColor)),
         useMaterial3: true,
       ),
-      initialRoute: RouteNames.loginScreen,
+      initialRoute: RouteNames.homeScreen,
       onGenerateRoute: Routes.getRoute,
     );
   }

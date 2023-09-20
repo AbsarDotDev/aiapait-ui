@@ -61,7 +61,7 @@ class _TradeMarkCardState extends State<TradeMarkCard> {
                                 : AppColors.green),
                         size: 8,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 4,
                       ),
                       CustomText(
@@ -90,7 +90,7 @@ class _TradeMarkCardState extends State<TradeMarkCard> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               RichText(
@@ -111,7 +111,7 @@ class _TradeMarkCardState extends State<TradeMarkCard> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Divider(
@@ -123,7 +123,7 @@ class _TradeMarkCardState extends State<TradeMarkCard> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CustomText(text: "Process:  ", fontSize: 12),
+                      const CustomText(text: "Process:  ", fontSize: 12),
                       Container(
                         width: 20,
                         height: 20,

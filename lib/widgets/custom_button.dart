@@ -7,7 +7,8 @@ class CustomButton extends StatefulWidget {
   final bool isLoading;
   final bool isDisabled;
 
-  CustomButton({
+  const CustomButton({
+    super.key,
     required this.text,
     required this.onPressed,
     this.isLoading = false,
@@ -15,16 +16,16 @@ class CustomButton extends StatefulWidget {
   });
 
   @override
-  _CustomButtonState createState() => _CustomButtonState();
+  CustomButtonState createState() => CustomButtonState();
 }
 
-class _CustomButtonState extends State<CustomButton> {
+class CustomButtonState extends State<CustomButton> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: widget.isDisabled || widget.isLoading ? null : widget.onPressed,
       child: Container(
-        padding: EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12),
         height: 48,
         width: widget.isLoading ? 48 : double.infinity,
         decoration: BoxDecoration(
@@ -42,7 +43,7 @@ class _CustomButtonState extends State<CustomButton> {
                 )
               : Text(
                   widget.text,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16,
                   ),

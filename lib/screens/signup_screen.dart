@@ -215,7 +215,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                           return null;
                         },
-                        suffixIcon: Icon(Icons.remove_red_eye),
+                        suffixIcon: const Icon(Icons.remove_red_eye),
                         preFixIcon: Icons.lock,
                         controller: passwordController,
                         hintText: 'Password',
@@ -240,7 +240,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       });
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
@@ -251,7 +251,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         fontSize: 15,
                         color: AppColors.primary,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       CustomTextButton(

@@ -3,7 +3,7 @@ import 'package:aiapait/screens/home_screen.dart';
 import 'package:aiapait/screens/login_screen.dart';
 import 'package:aiapait/screens/signup_screen.dart';
 import 'package:aiapait/screens/splash_screen.dart';
-import 'package:aiapait/screens/test_Screen.dart';
+import 'package:aiapait/screens/test_screen.dart';
 import 'package:aiapait/utils/route_names.dart';
 import 'package:flutter/material.dart';
 

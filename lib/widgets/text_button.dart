@@ -9,8 +9,9 @@ class CustomTextButton extends StatelessWidget {
   final int? color;
   final bool? isLink;
   final String? fonFamily;
-  CustomTextButton(
-      {required this.text,
+  const CustomTextButton(
+      {super.key,
+      required this.text,
       required this.fontSize,
       this.color = 0xff000000,
       this.fontWeight = FontWeight.normal,

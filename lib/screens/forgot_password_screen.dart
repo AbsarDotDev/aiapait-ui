@@ -1,13 +1,10 @@
 import 'dart:async';
 
 import 'package:aiapait/utils/colors.dart';
-import 'package:aiapait/utils/regex_checker.dart';
-import 'package:aiapait/utils/route_names.dart';
-import 'package:aiapait/utils/utils.dart';
+
 import 'package:aiapait/widgets/custom_button.dart';
 import 'package:aiapait/widgets/custom_text.dart';
-import 'package:aiapait/widgets/custom_textfield.dart';
-import 'package:aiapait/widgets/text_button.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl_phone_field/countries.dart';

@@ -181,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                 return null;
                               },
-                              suffixIcon: Icon(Icons.remove_red_eye),
+                              suffixIcon: const Icon(Icons.remove_red_eye),
                               preFixIcon: Icons.lock,
                               controller: passwordController,
                               hintText: 'Password',
@@ -218,7 +218,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       });
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
@@ -229,7 +229,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontSize: 15,
                         color: AppColors.primary,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       CustomTextButton(

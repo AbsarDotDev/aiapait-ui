@@ -54,15 +54,13 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
           ),
-          Center(
-            child: Container(
-              child: Text(
-                'Lorem Impsum',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
-                ),
+          const Center(
+            child: Text(
+              'Lorem Impsum',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
