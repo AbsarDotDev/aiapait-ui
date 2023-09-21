@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
     searchNode.dispose();
     _searchController.dispose();
     _scrollController.removeListener(_handleScroll);
-    _scrollController.dispose();
+
     super.dispose();
   }
 
@@ -108,7 +108,22 @@ class _HomeScreenState extends State<HomeScreen> {
               pinned: true,
               collapsedHeight: 70,
               actions: <Widget>[
-                !_showSearchField ? const Icon(Icons.search) : const SizedBox(),
+                !_showSearchField
+                    ? InkWell(
+                        onTap: () {},
+                        borderRadius: BorderRadius.circular(50),
+                        child: Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.search_rounded,
+                            size: 30,
+                          ),
+                        ),
+                      )
+                    : const SizedBox(),
               ],
             ),
             SliverList(
@@ -116,23 +131,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 <Widget>[
                   _showSearchField
                       ? Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                                12), // Set the card's border radius
-                          ),
                           surfaceTintColor: Color(AppColors.white),
                           child: Row(
                             children: [
                               Expanded(
                                 child: InkWell(
+                                  borderRadius: BorderRadius.circular(12),
                                   onTap: () {},
                                   child: Container(
                                     margin: const EdgeInsets.symmetric(
                                         horizontal: 4),
                                     height: 40,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
                                     child: Row(
                                         mainAxisSize: MainAxisSize.min,
                                         mainAxisAlignment:
@@ -161,6 +170,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       MainAxisSize.min,
                                                   children: [
                                                     InkWell(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12),
                                                       onTap: () {
                                                         setState(() {
                                                           _selectedFilter = "";
@@ -187,6 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               SizedBox(
                                 height: 40,
                                 child: InkWell(
+                                  borderRadius: BorderRadius.circular(12),
                                   onTap: () {
                                     _showMyDialog();
                                   },

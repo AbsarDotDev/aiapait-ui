@@ -17,23 +17,30 @@ class FilterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPressed,
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(6),
-          border: Border.all(
-            width: 1,
-            color: isActive ? Color(AppColors.primary) : Colors.transparent,
+    return Ink(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: Colors.white,
+      ),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(8),
+        onTap: onPressed,
+        child: Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              width: 1,
+              color: isActive ? Color(AppColors.primary) : Colors.transparent,
+            ),
           ),
-          color: Color(AppColors.white),
-        ),
-        child: Text(
-          text,
-          style: TextStyle(
-            color:
-                isActive ? Color(AppColors.primary) : Color(AppColors.black50),
+          child: Text(
+            text,
+            style: TextStyle(
+              color: isActive
+                  ? Color(AppColors.primary)
+                  : Color(AppColors.black50),
+            ),
           ),
         ),
       ),
