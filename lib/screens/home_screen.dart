@@ -13,8 +13,10 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
+  late final AnimationController _controller =
+      AnimationController(duration: const Duration(seconds: 4), vsync: this);
   bool _showSearchField = true;
   bool _showFloatingButton = false;
   String _selectedFilter = "";
@@ -109,20 +111,27 @@ class _HomeScreenState extends State<HomeScreen> {
               collapsedHeight: 70,
               actions: <Widget>[
                 !_showSearchField
-                    ? InkWell(
-                        onTap: () {},
-                        borderRadius: BorderRadius.circular(50),
-                        child: Container(
-                          padding: const EdgeInsets.all(6),
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            Icons.search_rounded,
-                            size: 30,
-                          ),
-                        ),
-                      )
+                    ? AnimatedBuilder(
+                        animation: _controller,
+                        builder: (context, child) {
+                          return Transform.translate(
+                            offset: const Offset(4, 19),
+                            child: InkWell(
+                              onTap: () {},
+                              borderRadius: BorderRadius.circular(50),
+                              child: Container(
+                                padding: const EdgeInsets.all(6),
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(
+                                  Icons.search_rounded,
+                                  size: 30,
+                                ),
+                              ),
+                            ),
+                          );
+                        })
                     : const SizedBox(),
               ],
             ),
@@ -255,9 +264,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () {},
               ),
             ),
-      floatingActionButtonLocation: _showFloatingButton
-          ? FloatingActionButtonLocation.endDocked
-          : FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: !_showFloatingButton
+          ? FloatingActionButtonLocation.centerDocked
+          : null,
     );
   }
 
