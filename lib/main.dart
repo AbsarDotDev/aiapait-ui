@@ -1,7 +1,9 @@
+import 'package:aiapait/bloc/internet_bloc/internet_bloc.dart';
 import 'package:aiapait/utils/colors.dart';
 import 'package:aiapait/utils/route_names.dart';
 import 'package:aiapait/utils/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,7 +29,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Color(AppColors.bgColor)),
         useMaterial3: true,
       ),
-      initialRoute: RouteNames.homeScreen,
+      initialRoute: RouteNames.loginScreenTwo,
       onGenerateRoute: Routes.getRoute,
     );
   }

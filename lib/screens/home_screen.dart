@@ -1,9 +1,12 @@
+import 'package:aiapait/bloc/internet_bloc/internet_bloc.dart';
+import 'package:aiapait/bloc/internet_bloc/internet_state.dart';
 import 'package:aiapait/utils/colors.dart';
 import 'package:aiapait/widgets/custom_button.dart';
 import 'package:aiapait/widgets/custom_text.dart';
 import 'package:aiapait/widgets/filter_button.dart';
 import 'package:aiapait/widgets/trademark_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -85,6 +88,19 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    BlocBuilder<InternetBloc, InternetState>(
+                      builder: (context, state) {
+                        if (state is InternetGainState) {
+                          return const Text("Connected");
+                        } else if (state is InternetLostState) {
+                          return const Text("Not connected");
+                        } else if (state is InternetInitialState) {
+                          return const Text("Loading...");
+                        } else {
+                          return const Text("Loading...");
+                        }
+                      },
+                    ),
                     Expanded(
                       child: CustomText(
                         text: "Greetings",

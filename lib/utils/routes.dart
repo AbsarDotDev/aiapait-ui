@@ -1,11 +1,14 @@
+import 'package:aiapait/bloc/login/login_bloc.dart';
 import 'package:aiapait/screens/forgot_password_screen.dart';
 import 'package:aiapait/screens/home_screen.dart';
 import 'package:aiapait/screens/login_screen.dart';
+import 'package:aiapait/screens/login_screen_two.dart';
 import 'package:aiapait/screens/signup_screen.dart';
 import 'package:aiapait/screens/splash_screen.dart';
 import 'package:aiapait/screens/test_screen.dart';
 import 'package:aiapait/utils/route_names.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Routes {
   static Route<dynamic> getRoute(RouteSettings settings) {
@@ -14,18 +17,25 @@ class Routes {
         return MaterialPageRoute(
           builder: (BuildContext context) => const SplashScreen(),
         );
-      case RouteNames.loginScreen:
+      case RouteNames.loginScreenTwo:
         return MaterialPageRoute(
-          builder: (BuildContext context) => const LoginScreen(),
+          builder: (BuildContext context) => BlocProvider(
+            create: (context) => LoginBloc(),
+            child: LoginScreenTwo(),
+          ),
         );
-      case RouteNames.testScreen:
-        return MaterialPageRoute(
-          builder: (BuildContext context) => const TestScreen(),
-        );
-      case RouteNames.signupScreen:
-        return MaterialPageRoute(
-          builder: (BuildContext context) => const SignUpScreen(),
-        );
+      // case RouteNames.loginScreen:
+      //   return MaterialPageRoute(
+      //     builder: (BuildContext context) => const LoginScreen(),
+      //   );
+      // case RouteNames.testScreen:
+      //   return MaterialPageRoute(
+      //     builder: (BuildContext context) => const TestScreen(),
+      //   );
+      // case RouteNames.signupScreen:
+      //   return MaterialPageRoute(
+      //     builder: (BuildContext context) => const SignUpScreen(),
+      //   );
       case RouteNames.forgotpasswordScreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const ForgotPasswordScreen(),

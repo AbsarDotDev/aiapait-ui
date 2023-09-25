@@ -7,24 +7,25 @@ import 'package:aiapait/widgets/custom_text.dart';
 
 class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
-  final String? Function(String?)? validator;
+  final Function(String)? onChanged;
   final bool obscureText;
   final FocusNode currentNode;
   final FocusNode? nextNode;
-
+  String? errorMessage;
   final String hintText;
   final IconData? preFixIcon;
   final Widget? suffixIcon;
 
-  const CustomTextField(
+  CustomTextField(
       {Key? key,
       required this.controller,
-      required this.validator,
+      required this.onChanged,
       required this.currentNode,
       this.nextNode,
       required this.hintText,
       this.preFixIcon,
       this.suffixIcon,
+      this.errorMessage,
       this.obscureText = false})
       : super(key: key);
 
@@ -33,9 +34,6 @@ class CustomTextField extends StatefulWidget {
 }
 
 class CustomTextFieldState extends State<CustomTextField> {
-  String? errorMessage;
-  bool isFormValid = false; // Add this line
-
   @override
   void initState() {
     super.initState();
@@ -53,10 +51,7 @@ class CustomTextFieldState extends State<CustomTextField> {
             focusNode: widget.currentNode,
             controller: widget.controller,
             onChanged: (value) {
-              setState(() {
-                errorMessage = widget.validator?.call(value);
-                isFormValid = errorMessage == null;
-              });
+              widget.onChanged!(value);
             },
             onFieldSubmitted: (value) {
               Utils.fieldFocusChange(
@@ -73,17 +68,15 @@ class CustomTextFieldState extends State<CustomTextField> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween, // added line
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  errorMessage != null
+                  widget.errorMessage != null
                       ? const Icon(
                           Icons.info_rounded,
                           color: Color(0xFFF44336),
                         )
-                      : isFormValid // Update this line
-                          ? const Icon(
-                              Icons.check,
-                              color: Colors.green,
-                            )
-                          : const SizedBox(),
+                      : const Icon(
+                          Icons.check,
+                          color: Colors.green,
+                        ),
                   const SizedBox(
                     width: 2,
                   ),
@@ -115,11 +108,11 @@ class CustomTextFieldState extends State<CustomTextField> {
             ),
           ),
         ),
-        if (errorMessage != null)
+        if (widget.errorMessage != null)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
             child: CustomText(
-              text: errorMessage!,
+              text: widget.errorMessage!,
               fontSize: 10,
               fontWeight: FontWeight.bold,
               color: AppColors.red,
