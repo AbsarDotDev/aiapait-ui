@@ -4,17 +4,19 @@ import 'package:aiapait/bloc/login/textfield_state.dart';
 class MainState {
   TextFieldState emailState;
   TextFieldState passwordState;
-  MainState({
-    required this.emailState,
-    required this.passwordState,
-  });
-  MainState copyWith({
-    TextFieldState? emailState,
-    TextFieldState? passwordState,
-  }) {
+  bool isPasswordObscured = true;
+
+  MainState(
+      {required this.emailState,
+      required this.passwordState,
+      required this.isPasswordObscured});
+  MainState copyWith(
+      {TextFieldState? emailState,
+      TextFieldState? passwordState,
+      bool? isPasswordObscured}) {
     return MainState(
-      emailState: emailState ?? this.emailState,
-      passwordState: passwordState ?? this.passwordState,
-    );
+        emailState: emailState ?? this.emailState,
+        passwordState: passwordState ?? this.passwordState,
+        isPasswordObscured: isPasswordObscured ?? this.isPasswordObscured);
   }
 }

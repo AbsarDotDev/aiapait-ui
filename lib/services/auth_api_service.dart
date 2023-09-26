@@ -11,6 +11,9 @@ abstract class AuthApiService extends ChopperService {
   Future<Response> loginUser(
     @Body() Map<String, dynamic> body,
   );
+  Future<Response> signUpUser(
+    @Body() Map<String, dynamic> body,
+  );
   static AuthApiService create() {
     final client = ChopperClient(
       // The first part of the URL is now here

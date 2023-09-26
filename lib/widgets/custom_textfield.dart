@@ -15,7 +15,7 @@ class CustomTextField extends StatelessWidget {
   final String hintText;
   final IconData? preFixIcon;
   final Widget? suffixIcon;
-
+  final VoidCallback? suffixOnTap;
   const CustomTextField({
     Key? key,
     required this.controller,
@@ -27,6 +27,7 @@ class CustomTextField extends StatelessWidget {
     this.preFixIcon,
     this.suffixIcon,
     this.errorMessage,
+    this.suffixOnTap,
     this.obscureText = false,
   }) : super(key: key);
 
@@ -38,6 +39,8 @@ class CustomTextField extends StatelessWidget {
         Card(
           elevation: 6,
           child: TextFormField(
+            onTapOutside: (event) =>
+                FocusManager.instance.primaryFocus?.unfocus(),
             obscureText: obscureText,
             focusNode: currentNode,
             controller: controller,
@@ -73,7 +76,7 @@ class CustomTextField extends StatelessWidget {
                   ),
                   if (suffixIcon != null)
                     Center(
-                      child: suffixIcon,
+                      child: InkWell(onTap: suffixOnTap, child: suffixIcon),
                     ),
                   const SizedBox(
                     width: 20,

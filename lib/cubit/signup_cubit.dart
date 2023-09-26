@@ -1,31 +1,26 @@
-import 'package:aiapait/bloc/login/login_event.dart';
-import 'package:aiapait/bloc/login/login_state.dart';
 import 'package:aiapait/bloc/login/textfield_state.dart';
 import 'package:aiapait/services/auth_api_service.dart';
 import 'package:aiapait/utils/regex_checker.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bloc/bloc.dart';
+import 'package:flutter/widgets.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class LoginBloc extends Bloc<LoginEvents, MainState> {
-  LoginBloc()
-      : super(MainState(
+part 'signup_state.dart';
+part 'signup_cubit.freezed.dart';
+
+class SignupCubit extends Cubit<SignupState> {
+  SignupCubit()
+      : super(SignupState.main(
+            nameState: TextFieldState("", false, null),
             emailState: TextFieldState("", false, null),
             passwordState: TextFieldState("", false, null),
-            isPasswordObscured: true)) {
-    on<OnEmailChange>(_onEmailChanged);
-    on<OnPasswordChange>(_onPasswordChanged);
-    on<OnSubmit>(_onSubmitted);
-    on<OnTogglePassword>(
-      (event, emit) {
-        emit(state.copyWith(isPasswordObscured: !state.isPasswordObscured));
-      },
-    );
-  }
-  void _onEmailChanged(OnEmailChange event, Emitter<MainState> emit) {
-    final updatedEmailState = TextFieldState(event.email, false, null);
+            isPasswordObscured: true));
+  void onEmailChanged(String email, Emitter<SignupState> emit) {
+    final updatedEmailState = TextFieldState(email, false, null);
     final currentState = state;
-    if (event.email.isEmpty) {
+    if (email.isEmpty) {
       updatedEmailState.error = "This is a required field";
-    } else if (!event.email.isValidEmail) {
+    } else if (email.isValidEmail) {
       updatedEmailState.error = "Invalid email address";
     } else {
       updatedEmailState.error = null;
@@ -35,12 +30,12 @@ class LoginBloc extends Bloc<LoginEvents, MainState> {
     emit(currentState.copyWith(emailState: updatedEmailState));
   }
 
-  void _onPasswordChanged(OnPasswordChange event, Emitter<MainState> emit) {
-    final updatePasswordState = TextFieldState(event.password, false, null);
+  void onPasswordChanged(String password, Emitter<SignupState> emit) {
+    final updatePasswordState = TextFieldState(password, false, null);
     final currentState = state;
-    if (event.password.isEmpty) {
+    if (password.isEmpty) {
       updatePasswordState.error = "This is a required field";
-    } else if (!event.password.isValidPassword) {
+    } else if (!password.isValidPassword) {
       updatePasswordState.error = "Password should be between 2 and 8 chracter";
     } else {
       updatePasswordState.error = null;
@@ -50,13 +45,14 @@ class LoginBloc extends Bloc<LoginEvents, MainState> {
     emit(currentState.copyWith(passwordState: updatePasswordState));
   }
 
-  void _onSubmitted(OnSubmit event, Emitter<MainState> emit) async {
+  void onSubmitted(Emitter<SignupState> emit) async {
     final emailState = (state).emailState;
     final passwordState = (state).passwordState;
+    final nameState = (state).nameState;
     if (emailState.error == null && passwordState.error == null) {
       final authApiService = AuthApiService.create();
       try {
-        final response = await authApiService.loginUser({
+        final response = await authApiService.signUpUser({
           "email": "${state.emailState.value}",
           "password": "${state.passwordState.value}"
         });
@@ -69,7 +65,8 @@ class LoginBloc extends Bloc<LoginEvents, MainState> {
         print(e.toString());
       }
     }
-    emit(MainState(
+    emit(SignupState.main(
+        nameState: TextFieldState("", false, null),
         emailState: TextFieldState("", false, null),
         passwordState: TextFieldState("", false, null),
         isPasswordObscured: state.isPasswordObscured));

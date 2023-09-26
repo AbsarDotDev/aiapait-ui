@@ -23,8 +23,6 @@ class LoginScreenTwo extends StatelessWidget {
 
   FocusNode passwordFocusNode = FocusNode();
 
-  final ValueNotifier<bool> _obsecurePassword = ValueNotifier(true);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,6 +94,7 @@ class LoginScreenTwo extends StatelessWidget {
                               loginBloc.add(OnEmailChange(email));
                             },
                             currentNode: emailFocusNode,
+                            nextNode: passwordFocusNode,
                             preFixIcon: Icons.mail,
                             controller: emailController,
                             hintText: 'Email',
@@ -107,8 +106,13 @@ class LoginScreenTwo extends StatelessWidget {
                               loginBloc.add(OnPasswordChange(password));
                             },
                             currentNode: passwordFocusNode,
-                            obscureText: _obsecurePassword.value,
-                            suffixIcon: const Icon(Icons.remove_red_eye),
+                            obscureText: loginBloc.state.isPasswordObscured,
+                            suffixIcon: loginBloc.state.isPasswordObscured
+                                ? const Icon(Icons.visibility)
+                                : const Icon(Icons.visibility_off_sharp),
+                            suffixOnTap: () {
+                              loginBloc.add(OnTogglePassword());
+                            },
                             preFixIcon: Icons.lock,
                             controller: passwordController,
                             hintText: 'Password',
@@ -138,6 +142,8 @@ class LoginScreenTwo extends StatelessWidget {
                         isLoading: false,
                         onPressed: () {
                           loginBloc.add(OnSubmit());
+                          emailController.clear();
+                          passwordController.clear();
                         },
                       ),
                       const SizedBox(
