@@ -1,12 +1,9 @@
-import 'dart:async';
-
 import 'package:aiapait/bloc/login/login_bloc.dart';
 import 'package:aiapait/bloc/login/login_event.dart';
 import 'package:aiapait/bloc/login/login_state.dart';
 import 'package:aiapait/utils/colors.dart';
-import 'package:aiapait/utils/regex_checker.dart';
 import 'package:aiapait/utils/route_names.dart';
-import 'package:aiapait/utils/utils.dart';
+
 import 'package:aiapait/widgets/custom_button.dart';
 import 'package:aiapait/widgets/custom_text.dart';
 import 'package:aiapait/widgets/custom_textfield.dart';
@@ -14,8 +11,6 @@ import 'package:aiapait/widgets/text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl_phone_field/countries.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 
 class LoginScreenTwo extends StatelessWidget {
   LoginScreenTwo({super.key});
@@ -60,10 +55,8 @@ class LoginScreenTwo extends StatelessWidget {
       body: BlocBuilder<LoginBloc, MainState>(
         builder: (context, state) {
           final LoginBloc loginBloc = context.read<LoginBloc>();
-          final emailError =
-              loginBloc.state.emailState.error; // Store email error
-          final passwordError =
-              loginBloc.state.passwordState.error; // Store password error
+          final emailError = loginBloc.state.emailState.error;
+          final passwordError = loginBloc.state.passwordState.error;
           return CustomScrollView(
             slivers: [
               SliverFillRemaining(
@@ -97,6 +90,7 @@ class LoginScreenTwo extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           CustomTextField(
+                            isValid: state.emailState.isValid,
                             errorMessage: emailError,
                             onChanged: (email) {
                               loginBloc.add(OnEmailChange(email));
@@ -107,6 +101,7 @@ class LoginScreenTwo extends StatelessWidget {
                             hintText: 'Email',
                           ),
                           CustomTextField(
+                            isValid: state.passwordState.isValid,
                             errorMessage: passwordError,
                             onChanged: (password) {
                               loginBloc.add(OnPasswordChange(password));
@@ -136,14 +131,13 @@ class LoginScreenTwo extends StatelessWidget {
                           height: 20,
                         ),
                       ),
-                      BlocBuilder<LoginBloc, MainState>(
-                        builder: (context, state) {
-                          return CustomButton(
-                            text: "Login",
-                            isDisabled: true,
-                            isLoading: false,
-                            onPressed: () {},
-                          );
+                      CustomButton(
+                        text: "Login",
+                        isDisabled: !(state.emailState.isValid &&
+                            state.passwordState.isValid),
+                        isLoading: false,
+                        onPressed: () {
+                          loginBloc.add(OnSubmit());
                         },
                       ),
                       const SizedBox(

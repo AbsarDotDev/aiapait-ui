@@ -1,43 +1,34 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 import 'package:aiapait/utils/colors.dart';
 import 'package:aiapait/utils/utils.dart';
 import 'package:aiapait/widgets/custom_text.dart';
 
-class CustomTextField extends StatefulWidget {
+class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final Function(String)? onChanged;
   final bool obscureText;
   final FocusNode currentNode;
   final FocusNode? nextNode;
-  String? errorMessage;
+  final String? errorMessage;
+  final bool isValid;
   final String hintText;
   final IconData? preFixIcon;
   final Widget? suffixIcon;
 
-  CustomTextField(
-      {Key? key,
-      required this.controller,
-      required this.onChanged,
-      required this.currentNode,
-      this.nextNode,
-      required this.hintText,
-      this.preFixIcon,
-      this.suffixIcon,
-      this.errorMessage,
-      this.obscureText = false})
-      : super(key: key);
-
-  @override
-  CustomTextFieldState createState() => CustomTextFieldState();
-}
-
-class CustomTextFieldState extends State<CustomTextField> {
-  @override
-  void initState() {
-    super.initState();
-  }
+  const CustomTextField({
+    Key? key,
+    required this.controller,
+    required this.onChanged,
+    required this.currentNode,
+    required this.hintText,
+    required this.isValid,
+    this.nextNode,
+    this.preFixIcon,
+    this.suffixIcon,
+    this.errorMessage,
+    this.obscureText = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,42 +38,42 @@ class CustomTextFieldState extends State<CustomTextField> {
         Card(
           elevation: 6,
           child: TextFormField(
-            obscureText: widget.obscureText,
-            focusNode: widget.currentNode,
-            controller: widget.controller,
+            obscureText: obscureText,
+            focusNode: currentNode,
+            controller: controller,
             onChanged: (value) {
-              widget.onChanged!(value);
+              onChanged!(value);
             },
             onFieldSubmitted: (value) {
-              Utils.fieldFocusChange(
-                  context, widget.currentNode, widget.nextNode!);
+              Utils.fieldFocusChange(context, currentNode, nextNode!);
             },
             decoration: InputDecoration(
-              prefixIcon: widget.preFixIcon != null
+              prefixIcon: preFixIcon != null
                   ? Icon(
-                      widget.preFixIcon,
+                      preFixIcon,
                       color: Color(AppColors.primary),
                     )
                   : null,
               suffixIcon: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween, // added line
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  widget.errorMessage != null
-                      ? const Icon(
-                          Icons.info_rounded,
-                          color: Color(0xFFF44336),
-                        )
-                      : const Icon(
-                          Icons.check,
-                          color: Colors.green,
-                        ),
+                  if (errorMessage != null)
+                    const Icon(
+                      Icons.info_rounded,
+                      color: Color(0xFFF44336),
+                    )
+                  else if (isValid)
+                    const Icon(
+                      Icons.check,
+                      color: Colors.green,
+                    ),
                   const SizedBox(
                     width: 2,
                   ),
-                  if (widget.suffixIcon != null)
+                  if (suffixIcon != null)
                     Center(
-                      child: widget.suffixIcon,
+                      child: suffixIcon,
                     ),
                   const SizedBox(
                     width: 20,
@@ -96,7 +87,7 @@ class CustomTextFieldState extends State<CustomTextField> {
                   width: 2,
                 ),
               ),
-              hintText: widget.hintText,
+              hintText: hintText,
               fillColor: Colors.white,
               filled: true,
               contentPadding:
@@ -108,11 +99,11 @@ class CustomTextFieldState extends State<CustomTextField> {
             ),
           ),
         ),
-        if (widget.errorMessage != null)
+        if (errorMessage != null)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
             child: CustomText(
-              text: widget.errorMessage!,
+              text: errorMessage!,
               fontSize: 10,
               fontWeight: FontWeight.bold,
               color: AppColors.red,

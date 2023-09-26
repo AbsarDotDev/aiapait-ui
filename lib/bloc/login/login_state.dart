@@ -13,7 +13,8 @@ class MainState {
     TextFieldState? passwordState,
   }) {
     return MainState(
-        emailState: emailState ?? this.emailState,
-        passwordState: passwordState ?? this.emailState);
+      emailState: emailState ?? this.emailState,
+      passwordState: passwordState ?? this.passwordState,
+    );
   }
 }
