@@ -1,5 +1,5 @@
 import 'package:aiapait/bloc/login/textfield_state.dart';
-import 'package:aiapait/services/auth_api_service.dart';
+import 'package:aiapait/services/signup/signup_api_service.dart';
 import 'package:aiapait/utils/regex_checker.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
@@ -15,12 +15,28 @@ class SignupCubit extends Cubit<SignupState> {
             emailState: TextFieldState("", false, null),
             passwordState: TextFieldState("", false, null),
             isPasswordObscured: true));
-  void onEmailChanged(String email, Emitter<SignupState> emit) {
+  void onNameChanged(String name) {
+    final updatedNameState = TextFieldState(name, false, null);
+    final currentState = state;
+    if (name.isEmpty) {
+      updatedNameState.error = "This is a required field";
+    } else if (!name.isValidName) {
+      updatedNameState.error = "Invalid Name";
+    } else {
+      updatedNameState.error = null;
+      updatedNameState.isValid = true;
+    }
+
+    emit(currentState.copyWith(nameState: updatedNameState));
+  }
+
+  void onEmailChanged(String email) {
+    print(email);
     final updatedEmailState = TextFieldState(email, false, null);
     final currentState = state;
     if (email.isEmpty) {
       updatedEmailState.error = "This is a required field";
-    } else if (email.isValidEmail) {
+    } else if (!email.isValidEmail) {
       updatedEmailState.error = "Invalid email address";
     } else {
       updatedEmailState.error = null;
@@ -30,7 +46,7 @@ class SignupCubit extends Cubit<SignupState> {
     emit(currentState.copyWith(emailState: updatedEmailState));
   }
 
-  void onPasswordChanged(String password, Emitter<SignupState> emit) {
+  void onPasswordChanged(String password) {
     final updatePasswordState = TextFieldState(password, false, null);
     final currentState = state;
     if (password.isEmpty) {
@@ -45,12 +61,12 @@ class SignupCubit extends Cubit<SignupState> {
     emit(currentState.copyWith(passwordState: updatePasswordState));
   }
 
-  void onSubmitted(Emitter<SignupState> emit) async {
+  void onSubmitted() async {
     final emailState = (state).emailState;
     final passwordState = (state).passwordState;
     final nameState = (state).nameState;
     if (emailState.error == null && passwordState.error == null) {
-      final authApiService = AuthApiService.create();
+      final authApiService = SignUpApiService.create();
       try {
         final response = await authApiService.signUpUser({
           "email": "${state.emailState.value}",
@@ -70,5 +86,9 @@ class SignupCubit extends Cubit<SignupState> {
         emailState: TextFieldState("", false, null),
         passwordState: TextFieldState("", false, null),
         isPasswordObscured: state.isPasswordObscured));
+  }
+
+  void onTogglePassword() {
+    emit(state.copyWith(isPasswordObscured: !state.isPasswordObscured));
   }
 }

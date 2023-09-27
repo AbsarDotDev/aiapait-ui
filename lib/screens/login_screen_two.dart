@@ -163,7 +163,7 @@ class LoginScreenTwo extends StatelessWidget {
                           CustomTextButton(
                             onPressed: () {
                               Navigator.pushNamed(
-                                  context, RouteNames.signupScreen);
+                                  context, RouteNames.signupScreenTwo);
                             },
                             text: "Register Now",
                             fontSize: 14,

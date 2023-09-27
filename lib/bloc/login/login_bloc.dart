@@ -1,7 +1,7 @@
 import 'package:aiapait/bloc/login/login_event.dart';
 import 'package:aiapait/bloc/login/login_state.dart';
 import 'package:aiapait/bloc/login/textfield_state.dart';
-import 'package:aiapait/services/auth_api_service.dart';
+import 'package:aiapait/services/login/login_api_service.dart';
 import 'package:aiapait/utils/regex_checker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,12 +14,12 @@ class LoginBloc extends Bloc<LoginEvents, MainState> {
     on<OnEmailChange>(_onEmailChanged);
     on<OnPasswordChange>(_onPasswordChanged);
     on<OnSubmit>(_onSubmitted);
-    on<OnTogglePassword>(
-      (event, emit) {
-        emit(state.copyWith(isPasswordObscured: !state.isPasswordObscured));
-      },
-    );
+    on<OnTogglePassword>(onTogglePassword);
   }
+  void onTogglePassword(OnTogglePassword event, Emitter<MainState> emit) {
+    emit(state.copyWith(isPasswordObscured: !state.isPasswordObscured));
+  }
+
   void _onEmailChanged(OnEmailChange event, Emitter<MainState> emit) {
     final updatedEmailState = TextFieldState(event.email, false, null);
     final currentState = state;
@@ -54,7 +54,7 @@ class LoginBloc extends Bloc<LoginEvents, MainState> {
     final emailState = (state).emailState;
     final passwordState = (state).passwordState;
     if (emailState.error == null && passwordState.error == null) {
-      final authApiService = AuthApiService.create();
+      final authApiService = LoginApiService.create();
       try {
         final response = await authApiService.loginUser({
           "email": "${state.emailState.value}",

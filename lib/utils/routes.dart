@@ -1,7 +1,9 @@
 import 'package:aiapait/bloc/login/login_bloc.dart';
+import 'package:aiapait/cubit/signup_cubit.dart';
 import 'package:aiapait/screens/forgot_password_screen.dart';
 import 'package:aiapait/screens/home_screen.dart';
 import 'package:aiapait/screens/login_screen_two.dart';
+import 'package:aiapait/screens/signup_screen_two.dart';
 import 'package:aiapait/screens/splash_screen.dart';
 import 'package:aiapait/utils/route_names.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +21,13 @@ class Routes {
           builder: (BuildContext context) => BlocProvider(
             create: (context) => LoginBloc(),
             child: LoginScreenTwo(),
+          ),
+        );
+      case RouteNames.signupScreenTwo:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => BlocProvider(
+            create: (context) => SignupCubit(),
+            child: SignUpScreenTwo(),
           ),
         );
       // case RouteNames.loginScreen:
