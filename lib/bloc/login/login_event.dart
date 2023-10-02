@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/material.dart';
+
 abstract class LoginEvents {}
 
 class OnEmailChange extends LoginEvents {
@@ -13,6 +15,10 @@ class OnPasswordChange extends LoginEvents {
   OnPasswordChange(this.password);
 }
 
-class OnSubmit extends LoginEvents {}
+class OnSubmit extends LoginEvents {
+  final BuildContext context;
+
+  OnSubmit({required this.context});
+}
 
 class OnTogglePassword extends LoginEvents {}

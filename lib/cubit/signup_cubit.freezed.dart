@@ -16,38 +16,31 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SignupState {
-  TextFieldState<dynamic> get nameState => throw _privateConstructorUsedError;
-  TextFieldState<dynamic> get emailState => throw _privateConstructorUsedError;
-  TextFieldState<dynamic> get passwordState =>
-      throw _privateConstructorUsedError;
+  TextFieldState get nameState => throw _privateConstructorUsedError;
+  TextFieldState get emailState => throw _privateConstructorUsedError;
+  TextFieldState get passwordState => throw _privateConstructorUsedError;
   bool get isPasswordObscured => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            TextFieldState<dynamic> nameState,
-            TextFieldState<dynamic> emailState,
-            TextFieldState<dynamic> passwordState,
+            TextFieldState nameState,
+            TextFieldState emailState,
+            TextFieldState passwordState,
             bool isPasswordObscured)
         main,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            TextFieldState<dynamic> nameState,
-            TextFieldState<dynamic> emailState,
-            TextFieldState<dynamic> passwordState,
-            bool isPasswordObscured)?
+    TResult? Function(TextFieldState nameState, TextFieldState emailState,
+            TextFieldState passwordState, bool isPasswordObscured)?
         main,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            TextFieldState<dynamic> nameState,
-            TextFieldState<dynamic> emailState,
-            TextFieldState<dynamic> passwordState,
-            bool isPasswordObscured)?
+    TResult Function(TextFieldState nameState, TextFieldState emailState,
+            TextFieldState passwordState, bool isPasswordObscured)?
         main,
     required TResult orElse(),
   }) =>
@@ -81,9 +74,9 @@ abstract class $SignupStateCopyWith<$Res> {
       _$SignupStateCopyWithImpl<$Res, SignupState>;
   @useResult
   $Res call(
-      {TextFieldState<dynamic> nameState,
-      TextFieldState<dynamic> emailState,
-      TextFieldState<dynamic> passwordState,
+      {TextFieldState nameState,
+      TextFieldState emailState,
+      TextFieldState passwordState,
       bool isPasswordObscured});
 }
 
@@ -109,15 +102,15 @@ class _$SignupStateCopyWithImpl<$Res, $Val extends SignupState>
       nameState: null == nameState
           ? _value.nameState
           : nameState // ignore: cast_nullable_to_non_nullable
-              as TextFieldState<dynamic>,
+              as TextFieldState,
       emailState: null == emailState
           ? _value.emailState
           : emailState // ignore: cast_nullable_to_non_nullable
-              as TextFieldState<dynamic>,
+              as TextFieldState,
       passwordState: null == passwordState
           ? _value.passwordState
           : passwordState // ignore: cast_nullable_to_non_nullable
-              as TextFieldState<dynamic>,
+              as TextFieldState,
       isPasswordObscured: null == isPasswordObscured
           ? _value.isPasswordObscured
           : isPasswordObscured // ignore: cast_nullable_to_non_nullable
@@ -133,9 +126,9 @@ abstract class _$$_MainCopyWith<$Res> implements $SignupStateCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {TextFieldState<dynamic> nameState,
-      TextFieldState<dynamic> emailState,
-      TextFieldState<dynamic> passwordState,
+      {TextFieldState nameState,
+      TextFieldState emailState,
+      TextFieldState passwordState,
       bool isPasswordObscured});
 }
 
@@ -158,15 +151,15 @@ class __$$_MainCopyWithImpl<$Res>
       nameState: null == nameState
           ? _value.nameState
           : nameState // ignore: cast_nullable_to_non_nullable
-              as TextFieldState<dynamic>,
+              as TextFieldState,
       emailState: null == emailState
           ? _value.emailState
           : emailState // ignore: cast_nullable_to_non_nullable
-              as TextFieldState<dynamic>,
+              as TextFieldState,
       passwordState: null == passwordState
           ? _value.passwordState
           : passwordState // ignore: cast_nullable_to_non_nullable
-              as TextFieldState<dynamic>,
+              as TextFieldState,
       isPasswordObscured: null == isPasswordObscured
           ? _value.isPasswordObscured
           : isPasswordObscured // ignore: cast_nullable_to_non_nullable
@@ -185,11 +178,11 @@ class _$_Main implements _Main {
       required this.isPasswordObscured});
 
   @override
-  final TextFieldState<dynamic> nameState;
+  final TextFieldState nameState;
   @override
-  final TextFieldState<dynamic> emailState;
+  final TextFieldState emailState;
   @override
-  final TextFieldState<dynamic> passwordState;
+  final TextFieldState passwordState;
   @override
   final bool isPasswordObscured;
 
@@ -227,9 +220,9 @@ class _$_Main implements _Main {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            TextFieldState<dynamic> nameState,
-            TextFieldState<dynamic> emailState,
-            TextFieldState<dynamic> passwordState,
+            TextFieldState nameState,
+            TextFieldState emailState,
+            TextFieldState passwordState,
             bool isPasswordObscured)
         main,
   }) {
@@ -239,11 +232,8 @@ class _$_Main implements _Main {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            TextFieldState<dynamic> nameState,
-            TextFieldState<dynamic> emailState,
-            TextFieldState<dynamic> passwordState,
-            bool isPasswordObscured)?
+    TResult? Function(TextFieldState nameState, TextFieldState emailState,
+            TextFieldState passwordState, bool isPasswordObscured)?
         main,
   }) {
     return main?.call(nameState, emailState, passwordState, isPasswordObscured);
@@ -252,11 +242,8 @@ class _$_Main implements _Main {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            TextFieldState<dynamic> nameState,
-            TextFieldState<dynamic> emailState,
-            TextFieldState<dynamic> passwordState,
-            bool isPasswordObscured)?
+    TResult Function(TextFieldState nameState, TextFieldState emailState,
+            TextFieldState passwordState, bool isPasswordObscured)?
         main,
     required TResult orElse(),
   }) {
@@ -297,17 +284,17 @@ class _$_Main implements _Main {
 
 abstract class _Main implements SignupState {
   const factory _Main(
-      {required final TextFieldState<dynamic> nameState,
-      required final TextFieldState<dynamic> emailState,
-      required final TextFieldState<dynamic> passwordState,
+      {required final TextFieldState nameState,
+      required final TextFieldState emailState,
+      required final TextFieldState passwordState,
       required final bool isPasswordObscured}) = _$_Main;
 
   @override
-  TextFieldState<dynamic> get nameState;
+  TextFieldState get nameState;
   @override
-  TextFieldState<dynamic> get emailState;
+  TextFieldState get emailState;
   @override
-  TextFieldState<dynamic> get passwordState;
+  TextFieldState get passwordState;
   @override
   bool get isPasswordObscured;
   @override

@@ -1,6 +1,3 @@
-import 'package:aiapait/bloc/login/login_bloc.dart';
-import 'package:aiapait/bloc/login/login_event.dart';
-import 'package:aiapait/bloc/login/login_state.dart';
 import 'package:aiapait/cubit/signup_cubit.dart';
 import 'package:aiapait/utils/colors.dart';
 import 'package:aiapait/utils/route_names.dart';
@@ -10,15 +7,20 @@ import 'package:aiapait/widgets/custom_text.dart';
 import 'package:aiapait/widgets/custom_textfield.dart';
 import 'package:aiapait/widgets/text_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SignUpScreenTwo extends StatelessWidget {
-  SignUpScreenTwo({super.key});
+class SignUpScreenTwo extends StatefulWidget {
+  const SignUpScreenTwo({super.key});
 
+  @override
+  State<SignUpScreenTwo> createState() => _SignUpScreenTwoState();
+}
+
+class _SignUpScreenTwoState extends State<SignUpScreenTwo> {
   TextEditingController emailController = TextEditingController();
 
   TextEditingController passwordController = TextEditingController();
+
   TextEditingController nameController = TextEditingController();
 
   FocusNode emailFocusNode = FocusNode();
@@ -26,6 +28,7 @@ class SignUpScreenTwo extends StatelessWidget {
   FocusNode passwordFocusNode = FocusNode();
 
   FocusNode nameFocusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

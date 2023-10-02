@@ -20,14 +20,14 @@ class Routes {
         return MaterialPageRoute(
           builder: (BuildContext context) => BlocProvider(
             create: (context) => LoginBloc(),
-            child: LoginScreenTwo(),
+            child: const LoginScreenTwo(),
           ),
         );
       case RouteNames.signupScreenTwo:
         return MaterialPageRoute(
           builder: (BuildContext context) => BlocProvider(
             create: (context) => SignupCubit(),
-            child: SignUpScreenTwo(),
+            child: const SignUpScreenTwo(),
           ),
         );
       // case RouteNames.loginScreen:

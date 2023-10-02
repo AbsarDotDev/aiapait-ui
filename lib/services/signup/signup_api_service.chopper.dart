@@ -18,7 +18,7 @@ final class _$SignUpApiService extends SignUpApiService {
 
   @override
   Future<Response<dynamic>> signUpUser(Map<String, dynamic> body) {
-    final Uri $url = Uri.parse('/login');
+    final Uri $url = Uri.parse('/register');
     final $body = body;
     final Request $request = Request(
       'POST',
